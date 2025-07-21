@@ -20,6 +20,7 @@ uint16_t bytes_enviados = 0;
 uint16_t indice_buffer = 0;
 uint8_t contador_muestras = 0;
 uint8_t timestamp_count = 0;
+uint8_t timestamp_count = 0;
 
 void setup() {
   Wire.begin();
