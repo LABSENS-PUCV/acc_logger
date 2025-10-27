@@ -1,20 +1,16 @@
 import struct
 import pandas as pd
 
-# =====================
-# CONFIGURACIÓN
-# =====================
 archivo_entrada = "prueba3.bin"
 archivo_salida  = "datos_convertidos4.csv"
 
-# =====================
-# CONSTANTES DEL FORMATO NUEVO (1024B)
-# =====================
+# constantes
+
 TAMANO_BLOQUE        = 1024
 MUESTRAS_POR_BLOQUE  = 85
 BYTES_POR_MUESTRA    = 12   # 6 ejes × 2 bytes
 BYTES_RELLENO_FINAL  = 4    # bytes 1020..1023
-ENDIAN               = ">"   # big-endian (alto primero, como en el ESP32)
+ENDIAN               = ">"   # big endian (alto primero como en el ESP32)
 
 # Sanity check del formato
 assert MUESTRAS_POR_BLOQUE * BYTES_POR_MUESTRA + BYTES_RELLENO_FINAL == TAMANO_BLOQUE, \
@@ -37,13 +33,13 @@ with open(archivo_entrada, "rb") as f:
 
         bloque_idx += 1
 
-        # --- Validar relleno final (opcional pero útil)
+        # --- Validar relleno final 
         relleno = bloque[1020:1024]
         if relleno != b"\x00\x00\x00\x00":
             # No abortamos, solo avisamos (puede ser intencional en alguna prueba)
             print(f"⚠️ Relleno no es todo ceros en bloque {bloque_idx}: {relleno.hex()}")
 
-        # --- Parsear las 85 muestras (0..84)
+        # --- Parsear las 85 muestras
         for j in range(MUESTRAS_POR_BLOQUE):
             offset = j * BYTES_POR_MUESTRA
             muestra = bloque[offset:offset + BYTES_POR_MUESTRA]
@@ -69,3 +65,4 @@ df.to_csv(archivo_salida, index=False)
 print(f"✅ Archivo exportado correctamente: {archivo_salida}")
 print(f"   Bloques procesados: {bloque_idx}")
 print(f"   Muestras totales: {len(df)} (={bloque_idx} × {MUESTRAS_POR_BLOQUE})")
+
