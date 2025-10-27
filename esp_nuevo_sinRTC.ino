@@ -3,7 +3,7 @@
 #include <SPI.h>
 
 #define MPU_ADDR 0x69
-#define SD_CS_PIN 2    //#define SD_CS_PIN 5 (esp antiguo) // #define SD_CS_PIN 2 (esp nuevo)
+#define SD_CS_PIN 2    // PIN 5 (esp antiguo) PIN 2 (esp nuevo)
 #define PIN_BOTON 27
 #define PIN_SALIDA 13
 
@@ -28,7 +28,7 @@ void setup() {
 
   iniciarMPU();
   configurarMPU();
-  pinMode(PIN_BOTON, INPUT);                 // pull-up EXTERNO (10k a 3V3)
+  pinMode(PIN_BOTON, INPUT);                 // pull up externo
   pinMode(PIN_SALIDA, OUTPUT);
 
   if (!SD.begin(SD_CS_PIN)) {
