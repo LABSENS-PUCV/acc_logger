@@ -59,7 +59,7 @@ void adquisicionTask(void* pvParameters) {
   while (true) {
     if (buffer_lleno[0] && buffer_lleno[1] && buffer_lleno[2] && buffer_lleno[3]) {
       Serial.println("Todos los buffers llenos, esperando SD.");
-      vTaskDelay(10);
+      vTaskDelay(5);
       continue;
     }
 
